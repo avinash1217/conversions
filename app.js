@@ -7,10 +7,18 @@ const graphQlResolver = require("./graphql/resolvers/index");
 const authMiddleware = require('./middlewares/auth');
 const app = express();
 const mongoose = require("mongoose");
+const rateLimit = require('express-rate-limit');
+
+const rateLimiter = rateLimit({
+  max: 30,
+  windowMs: 1 * 60 * 1000 //1 minute
+});
 
 app.use(bodyParser.json());
 
 app.use(authMiddleware);
+
+app.use(rateLimiter)
 
 app.use(
   "/graphql",

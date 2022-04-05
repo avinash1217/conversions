@@ -8,7 +8,8 @@ module.exports = (req, res, next) => {
         req.isAuthenticated = false;
         return next();
     }
-    const token = authHeader.split(' ')[1];
+    // Authorization header must be passed from client and as 'Bearer <token generated on login>'
+    const token = authHeader.split(' ')[1]; 
     if (!token || token == false) {
         req.isAuthenticated = false;
         return next();
